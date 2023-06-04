@@ -1,3 +1,4 @@
 # todo-app-js
-![s21_string+](.png)
+![todo-app-js](./misc/screenshot.png)
+
 Simple to-do app with vanilla JS and Bootstrap
