@@ -1,4 +1,4 @@
-(function () {
+(() => {
   function createAppTitle(title) {
     const appTitle = document.createElement('h2');
     appTitle.innerHTML = title;
@@ -64,7 +64,8 @@
       deleteButton,
     };
   }
-  function createTodoApp(container, title = 'Список дел', listName) {
+  function createTodoApp(container, list, title = 'Список дел') {
+    let listName = list;
     const todoAppTitle = createAppTitle(title);
     const todoItemForm = createTodoItemForm();
     const todoList = createTodoList();
@@ -77,12 +78,13 @@
 
     if (parseObject) listName = Object.assign(listName, parseObject);
     if (listName) {
-      for (const task of listName) {
-        todoItem = createTodoItem(task);
+      listName.forEach((item) => {
+        const task = item;
+        const todoItem = createTodoItem(task);
         if (!task.id) {
           let date = new Date().getTime();
           task.id = date;
-          date++;
+          date += 1;
         }
         todoList.append(todoItem.item);
 
@@ -99,13 +101,13 @@
         });
 
         todoItem.deleteButton.addEventListener('click', (e) => {
-          if (confirm('Вы уверены?')) {
+          if (window.confirm('Вы уверены?')) {
             listName.splice(listName.indexOf(task), 1);
             e.target.parentNode.parentNode.remove();
             localStorage.setItem(title, JSON.stringify(listName));
           }
         });
-      }
+      });
     }
 
     todoItemForm.input.addEventListener('input', () => {
@@ -137,7 +139,7 @@
         }
       });
       todoItem.deleteButton.addEventListener('click', () => {
-        if (confirm('Вы уверены?')) {
+        if (window.confirm('Вы уверены?')) {
           listName.splice(listName.indexOf(task), 1);
           todoItem.item.remove();
           localStorage.setItem(title, JSON.stringify(listName));
@@ -150,4 +152,4 @@
     });
   }
   window.createTodoApp = createTodoApp;
-}());
+})();
