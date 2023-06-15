@@ -1,14 +1,14 @@
 (function () {
   function createAppTitle(title) {
-    let appTitle = document.createElement('h2');
+    const appTitle = document.createElement('h2');
     appTitle.innerHTML = title;
     return appTitle;
   }
   function createTodoItemForm() {
-    let form = document.createElement('form');
-    let input = document.createElement('input');
-    let buttonWrapper = document.createElement('div');
-    let button = document.createElement('button');
+    const form = document.createElement('form');
+    const input = document.createElement('input');
+    const buttonWrapper = document.createElement('div');
+    const button = document.createElement('button');
 
     form.classList.add('input-group', 'mb-3');
     form.setAttribute('id', 'form-input');
@@ -31,16 +31,16 @@
     };
   }
   function createTodoList() {
-    let list = document.createElement('ul');
+    const list = document.createElement('ul');
     list.classList.add('list-group');
     return list;
   }
   function createTodoItem(task) {
-    let item = document.createElement('li');
+    const item = document.createElement('li');
 
-    let buttonGroup = document.createElement('div');
-    let doneButton = document.createElement('button');
-    let deleteButton = document.createElement('button');
+    const buttonGroup = document.createElement('div');
+    const doneButton = document.createElement('button');
+    const deleteButton = document.createElement('button');
 
     item.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
     item.textContent = task.name;
@@ -61,13 +61,13 @@
     return {
       item,
       doneButton,
-      deleteButton
+      deleteButton,
     };
   }
   function createTodoApp(container, title = 'Список дел', listName) {
-    let todoAppTitle = createAppTitle(title);
-    let todoItemForm = createTodoItemForm();
-    let todoList = createTodoList();
+    const todoAppTitle = createAppTitle(title);
+    const todoItemForm = createTodoItemForm();
+    const todoList = createTodoList();
 
     container.append(todoAppTitle);
     container.append(todoItemForm.form);
@@ -86,7 +86,7 @@
         }
         todoList.append(todoItem.item);
 
-        todoItem.doneButton.addEventListener('click', function (e) {
+        todoItem.doneButton.addEventListener('click', (e) => {
           if (!task.done) {
             task.done = true;
             e.target.parentNode.parentNode.classList.toggle('list-group-item-success');
@@ -98,7 +98,7 @@
           }
         });
 
-        todoItem.deleteButton.addEventListener('click', function (e) {
+        todoItem.deleteButton.addEventListener('click', (e) => {
           if (confirm('Вы уверены?')) {
             listName.splice(listName.indexOf(task), 1);
             e.target.parentNode.parentNode.remove();
@@ -108,7 +108,7 @@
       }
     }
 
-    todoItemForm.input.addEventListener('input', function () {
+    todoItemForm.input.addEventListener('input', () => {
       if (!todoItemForm.input.value) {
         todoItemForm.button.disabled = true;
       } else {
@@ -116,7 +116,7 @@
       }
     });
 
-    todoItemForm.form.addEventListener('submit', function (e) {
+    todoItemForm.form.addEventListener('submit', (e) => {
       e.preventDefault();
       if (!todoItemForm.input.value) {
         return;
@@ -125,7 +125,7 @@
       const todoItem = createTodoItem(task);
       listName.push(task);
       localStorage.setItem(title, JSON.stringify(listName));
-      todoItem.doneButton.addEventListener('click', function () {
+      todoItem.doneButton.addEventListener('click', () => {
         if (!task.done) {
           task.done = true;
           todoItem.item.classList.toggle('list-group-item-success');
@@ -136,7 +136,7 @@
           localStorage.setItem(title, JSON.stringify(listName));
         }
       });
-      todoItem.deleteButton.addEventListener('click', function () {
+      todoItem.deleteButton.addEventListener('click', () => {
         if (confirm('Вы уверены?')) {
           listName.splice(listName.indexOf(task), 1);
           todoItem.item.remove();
@@ -150,4 +150,4 @@
     });
   }
   window.createTodoApp = createTodoApp;
-})();
+}());
